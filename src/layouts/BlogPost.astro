@@ -1,26 +1,31 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import DefaultLayout from '../layouts/DefaultLayout.astro';
+import type { CollectionEntry } from "astro:content";
+import DefaultLayout from "../layouts/DefaultLayout.astro";
 import BlogpostHeader from "../components/blog/BlogpostHeader.astro";
 import Separator from "../components/shared/Separator.astro";
 
 export interface Props {
-	slug: CollectionEntry<'blog'>['slug'];
-	data: CollectionEntry<'blog'>['data'];
+    slug: CollectionEntry<"blog">["slug"];
+    data: CollectionEntry<"blog">["data"];
 }
 
-const {slug, data} = Astro.props;
+const { slug, data } = Astro.props;
 const { title, description, pubDate, updatedDate, heroImage, excerpt } = data;
 ---
 
 <DefaultLayout>
-	<BlogpostHeader title={title} image={heroImage} slug={slug} date={pubDate} />
+    <BlogpostHeader
+        title={title}
+        image={heroImage}
+        slug={slug}
+        date={pubDate}
+    />
 
-	<Separator/>
+    <Separator />
 
-	<main>
-		<article>
-			<slot />
-		</article>
-	</main>
+    <main>
+        <article>
+            <slot />
+        </article>
+    </main>
 </DefaultLayout>

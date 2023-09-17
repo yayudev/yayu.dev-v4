@@ -4,33 +4,37 @@ import DefaultLayout from "../../layouts/DefaultLayout.astro";
 import ExperimentsListItem from "../../components/experiments/ExperimentsListItem.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 
-const experiments =(await getCollection("experiments")).sort(
-  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+const experiments = (await getCollection("experiments")).sort(
+    (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
 );
 const featuredExperiment = experiments[0];
 ---
 
 <DefaultLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <main>
-    <section>
-      <ExperimentsListItem
-        featured={true}
-        date={featuredExperiment.data.pubDate}
-        title={featuredExperiment.data.title}
-        image={featuredExperiment.data.heroImage}
-        slug={featuredExperiment.slug}
-      />
+    <main>
+        <section>
+            <ExperimentsListItem
+                featured={true}
+                date={featuredExperiment.data.pubDate}
+                title={featuredExperiment.data.title}
+                image={featuredExperiment.data.heroImage}
+                slug={featuredExperiment.slug}
+            />
 
-      <ul role="list" class="grid grid-cols-2 gap-x-4 gap-y-8">
-        {experiments.slice(1).map((post) =>
-          <ExperimentsListItem
-            date={post.data.pubDate}
-            title={post.data.title}
-            image={post.data.heroImage}
-            slug={post.slug}
-          />
-        )}
-      </ul>
-    </section>
-  </main>
+            <ul role="list" class="grid grid-cols-2 gap-x-4 gap-y-8">
+                {
+                    experiments
+                        .slice(1)
+                        .map((post) => (
+                            <ExperimentsListItem
+                                date={post.data.pubDate}
+                                title={post.data.title}
+                                image={post.data.heroImage}
+                                slug={post.slug}
+                            />
+                        ))
+                }
+            </ul>
+        </section>
+    </main>
 </DefaultLayout>

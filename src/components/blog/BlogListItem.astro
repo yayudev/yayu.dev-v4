@@ -7,33 +7,43 @@ export interface Props {
     title: string;
     slug: string;
     excerpt: string;
-    featured? : boolean;
+    featured?: boolean;
 }
 
-const {date, image, title, slug, excerpt, featured = false} = Astro.props;
+const { date, image, title, slug, excerpt, featured = false } = Astro.props;
 ---
 
 <li class="hover:bg-gray-100 m-0 p-2 rounded-xl cursor-pointer group">
     <a href={`/blog/${slug}`}>
         <article class="relative flex flex-col gap-8 sm:flex-row">
-            <div class="relative hidden sm:block sm:aspect-square sm:w-32 sm:shrink-0">
-                <img src={image}
-                     alt={title}
-                     class="absolute inset-0 h-full w-full rounded-xl bg-gray-50 object-cover"
-                     transition:name={`blog-image-${slug}`}
+            <div
+                class="relative hidden sm:block sm:aspect-square sm:w-32 sm:shrink-0"
+            >
+                <img
+                    src={image}
+                    alt={title}
+                    class="absolute inset-0 h-full w-full rounded-xl bg-gray-50 object-cover"
+                    transition:name={`blog-image-${slug}`}
+                />
+                <div
+                    class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10"
                 >
-                <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>
+                </div>
             </div>
             <div>
                 <div class="flex items-center gap-x-4 text-sm">
-                    <p class="pointer-events-none block font-medium text-gray-500" transition:name={`blog-date-${slug}`}>
+                    <p
+                        class="pointer-events-none block font-medium text-gray-500"
+                        transition:name={`blog-date-${slug}`}
+                    >
                         <FormattedDate date={date} />
                     </p>
-
                 </div>
                 <div class="relative max-w-xl pt-2">
-                    <h2 class="text-2xl font-semibold leading-6 text-gray-900 group-hover:text-gray-600"
-                        transition:name={`blog-title-${slug}`}>
+                    <h2
+                        class="text-2xl font-semibold leading-6 text-gray-900 group-hover:text-gray-600"
+                        transition:name={`blog-title-${slug}`}
+                    >
                         <span class="absolute inset-0"></span>
                         {title}
                     </h2>

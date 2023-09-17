@@ -1,36 +1,37 @@
 ---
 import { getCollection } from "astro:content";
+
 import DefaultLayout from "../../layouts/DefaultLayout.astro";
 import BlogListItem from "../../components/blog/BlogListItem.astro";
+import Separator from "../../components/shared/Separator.astro";
+
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 
-const posts = (await getCollection("blog")).sort(
-  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+const posts  =(await getCollection("blog")).sort(
+    (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
 );
-const featuredPost = posts[0];
 ---
 
 <DefaultLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <main>
-    <section>
-      <BlogListItem
-        featured
-        date={featuredPost.data.pubDate}
-        title={featuredPost.data.title}
-        image={featuredPost.data.heroImage}
-        slug={featuredPost.slug}
-      />
+    <main>
+        <section>
+            <ul role="list" class="flex-col flex gap-2">
+                {posts.map((post, index) =>
+                    <>
+                        <BlogListItem
+                          date={post.data.pubDate}
+                          title={post.data.title}
+                          image={post.data.heroImage}
+                          excerpt={post.data.excerpt}
+                          slug={post.slug}
+                        />
 
-      <ul role="list" class="grid grid-cols-2 gap-x-4 gap-y-8">
-        {posts.slice(1).map((post) =>
-          <BlogListItem
-            date={post.data.pubDate}
-            title={post.data.title}
-            image={post.data.heroImage}
-            slug={post.slug}
-          />
-        )}
-      </ul>
-    </section>
-  </main>
+                        {index !== posts.length - 1 && (
+                            <Separator />
+                        )}
+                    </>
+                )}
+            </ul>
+        </section>
+    </main>
 </DefaultLayout>

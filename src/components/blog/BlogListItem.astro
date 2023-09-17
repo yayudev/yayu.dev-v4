@@ -5,34 +5,42 @@ export interface Props {
     image: string;
     title: string;
     slug: string;
+    excerpt: string;
     featured? : boolean;
 }
 
-const {date, image, title, slug, featured = false} = Astro.props;
+const {date, image, title, slug, excerpt, featured = false} = Astro.props;
 ---
 
-<li class:list={["relative list-none", featured ? "mb-8" : ""]}>
-    <a href={`/blog/${slug}`}>
-        <div class:list={[
-            "group aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100",
-            "focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100",
-            featured ? "aspect-h-4" : ""
-        ]}>
-            <img
-                src={image}
-                alt=""
-                class="pointer-events-none object-cover"
-                transition:name={`hero-image-${slug}`}
-            />
-        </div>
+<a href={`/blog/${slug}`}>
+    <li class="hover:bg-gray-100 m-0 p-2 rounded-xl cursor-pointer group">
+        <article class="relative flex flex-col gap-8 sm:flex-row">
+            <div class="relative hidden sm:block sm:aspect-square sm:w-32 sm:shrink-0">
+                <img src={image}
+                     alt={title}
+                     class="absolute inset-0 h-full w-full rounded-xl bg-gray-50 object-cover"
+                     transition:name={`blog-image-${slug}`}
+                >
+                <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>
+            </div>
+            <div>
+                <div class="flex items-center gap-x-4 text-sm">
+                    <p class="pointer-events-none block font-medium text-gray-500" transition:name={`blog-date-${slug}`}>
+                        <FormattedDate date={date} />
+                    </p>
 
-        <div class={featured ? "text-center text-md" : "text-sm"}>
-            <p class="pointer-events-none mt-2 block truncate font-medium text-gray-900">
-                {title}
-            </p>
-            <p class="pointer-events-none block font-medium text-gray-500">
-                <FormattedDate date={date} />
-            </p>
-        </div>
-    </a>
-</li>
+                </div>
+                <div class="relative max-w-xl pt-2">
+                    <h2 class="text-2xl font-semibold leading-6 text-gray-900 group-hover:text-gray-600"
+                        transition:name={`blog-title-${slug}`}>
+                        <span class="absolute inset-0"></span>
+                        {title}
+                    </h2>
+                    <p class="pt-2 text-sm leading-6 text-gray-600">
+                        {excerpt}
+                    </p>
+                </div>
+            </div>
+        </article>
+    </li>
+</a>

@@ -1,8 +1,8 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import DefaultLayout from '../layouts/DefaultLayout.astro';
-import FormattedDate from '../components/shared/FormattedDate.astro';
 import BlogpostHeader from "../components/blog/BlogpostHeader.astro";
+import Separator from "../components/shared/Separator.astro";
 
 export interface Props {
 	slug: CollectionEntry<'blog'>['slug'];
@@ -10,32 +10,17 @@ export interface Props {
 }
 
 const {slug, data} = Astro.props;
-const { title, description, pubDate, updatedDate, heroImage } = data;
+const { title, description, pubDate, updatedDate, heroImage, excerpt } = data;
 ---
 
 <DefaultLayout>
-			 <BlogpostHeader title={title} image={heroImage} slug={slug} date={pubDate} />
+	<BlogpostHeader title={title} image={heroImage} slug={slug} date={pubDate} />
 
-				<main>
-			<article>
+	<Separator/>
 
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
-					</div>
-					<slot />
-				</div>
-			</article>
-				</main>
+	<main>
+		<article>
+			<slot />
+		</article>
+	</main>
 </DefaultLayout>

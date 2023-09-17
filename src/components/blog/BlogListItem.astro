@@ -1,5 +1,6 @@
 ---
 import FormattedDate from "../shared/FormattedDate.astro";
+
 export interface Props {
     date: Date;
     image: string;
@@ -12,8 +13,8 @@ export interface Props {
 const {date, image, title, slug, excerpt, featured = false} = Astro.props;
 ---
 
-<a href={`/blog/${slug}`}>
-    <li class="hover:bg-gray-100 m-0 p-2 rounded-xl cursor-pointer group">
+<li class="hover:bg-gray-100 m-0 p-2 rounded-xl cursor-pointer group">
+    <a href={`/blog/${slug}`}>
         <article class="relative flex flex-col gap-8 sm:flex-row">
             <div class="relative hidden sm:block sm:aspect-square sm:w-32 sm:shrink-0">
                 <img src={image}
@@ -42,5 +43,5 @@ const {date, image, title, slug, excerpt, featured = false} = Astro.props;
                 </div>
             </div>
         </article>
-    </li>
-</a>
+    </a>
+</li>

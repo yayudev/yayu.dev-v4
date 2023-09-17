@@ -14,8 +14,8 @@ const { image, title, date, slug } = Astro.props;
   <div>
     <img class="h-32 w-full object-cover lg:h-96 rounded-none"
          src={image}
-         alt=""
-         transition:name={`blog-image-${slug}`}"
+         alt={title}
+         transition:name={`blog-image-${slug}`}
     >
   </div>
   <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pt-5">

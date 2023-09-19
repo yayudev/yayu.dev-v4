@@ -28,15 +28,15 @@ const links = [
 ---
 
 <header>
-    <nav class="bg-gray-800">
+    <nav class="bg-white shadow">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div class="relative flex h-16 items-center justify-between">
+            <div class="relative flex h-16 justify-between">
                 <div
                     class="absolute inset-y-0 left-0 flex items-center sm:hidden"
                 >
                     <button
                         type="button"
-                        class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                        class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                         aria-controls="mobile-menu"
                         aria-expanded="false"
                     >
@@ -81,31 +81,21 @@ const links = [
                         </svg>
                     </button>
                 </div>
+
                 <div
-                    class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
+                    class="w-full flex justify-center sm:grid sm:grid-cols-3 sm:gap-4"
                 >
                     <div class="flex flex-shrink-0 items-center">
                         <a href="/">
-                            <h1 class="text-3xl text-white">yayu.dev</h1>
+                            <h1 class="text-3xl text-blue-900">yayu.dev</h1>
                         </a>
                     </div>
-                </div>
-                <div
-                    class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
-                >
-                    <div class="hidden sm:ml-6 sm:block">
+
+                    <div class="hidden sm:flex justify-center sm:space-x-8">
                         <div class="flex space-x-4">
                             {
                                 links.map((link) => (
-                                    <HeaderLink
-                                        href={link.href}
-                                        class:list={[
-                                            "rounded-md px-3 py-2 text-md font-medium",
-                                            link.active
-                                                ? "bg-gray-900 text-white hover:text-white"
-                                                : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                                        ]}
-                                    >
+                                    <HeaderLink href={link.href}>
                                         {link.text}
                                     </HeaderLink>
                                 ))
@@ -117,18 +107,10 @@ const links = [
         </div>
 
         <div class="sm:hidden hidden" id="mobile-menu">
-            <div class="space-y-1 px-2 pb-3 pt-2">
+            <div class="space-y-1 pb-3 pt-2">
                 {
                     links.map((link) => (
-                        <HeaderLink
-                            href={link.href}
-                            class:list={[
-                                "block rounded-md px-3 py-2 text-base font-medium",
-                                link.active
-                                    ? "bg-gray-900 text-white hover:text-white"
-                                    : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                            ]}
-                        >
+                        <HeaderLink isMobile={true} href={link.href}>
                             {link.text}
                         </HeaderLink>
                     ))
@@ -146,5 +128,9 @@ const links = [
 
     button.addEventListener("click", () => {
         menu.classList.toggle("hidden");
+    });
+
+    window.addEventListener("resize", () => {
+        menu.classList.add("hidden");
     });
 </script>

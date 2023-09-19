@@ -13,7 +13,9 @@ const { slug, data } = Astro.props;
 const { title, description, pubDate, updatedDate, heroImage, excerpt } = data;
 ---
 
-<DefaultLayout>
+<DefaultLayout fullWidth={true} title={`yayu.dev | ${title}`}>
+    <style slot="head-styles"></style>
+
     <BlogpostHeader
         title={title}
         image={heroImage}
@@ -23,7 +25,7 @@ const { title, description, pubDate, updatedDate, heroImage, excerpt } = data;
 
     <Separator />
 
-    <main>
+    <main class="flex-grow flex flex-col items-center max-w-3xl mx-auto py-6">
         <article>
             <slot />
         </article>

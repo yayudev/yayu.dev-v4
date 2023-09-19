@@ -1,0 +1,123 @@
+---
+import DefaultLayout from "../layouts/DefaultLayout.astro";
+import AboutSection from "../components/contact/AboutSection.astro";
+---
+
+<DefaultLayout>
+    <main class="w-screen max-w-3xl text-start py-2 px-6">
+        <h1 class="font-bold text-4xl w-100 sm:text-center">About me</h1>
+
+        <AboutSection title="Me">
+            <p class="p-1">
+                Hi! I'm Arturo Coronel (you can call me Yayu). I'm 28, live in
+                Mexico but I'm usually traveling most of the time. Besides
+                webdev, my hobbies are learning webdev, studying philosophy, and
+                attending idol lives events at Japan and watching anime.
+            </p>
+        </AboutSection>
+
+        <AboutSection title="Work experience">
+            <ul class="list-disc flex flex-col gap-2 p-1">
+                <li>
+                    Fullstack developer for over 10 years (mainly front-end).
+                </li>
+                <li>
+                    I've been in both small and big teams as a lead and
+                    individual contributor.
+                </li>
+                <li>
+                    Worked on consumer applications, B2B data analysis,
+                    healthcare, government and scientific/genomic research
+                    applications.
+                </li>
+                <li>
+                    I care a lot about topics such as accessibility, frontend
+                    performance, developer experience (tooling, flows, etc) and
+                    automating stuff (CI/CD)
+                </li>
+                <li>
+                    Always looking for new challenges and opportunities to
+                    learn, as well as to share my knowledge with others and the
+                    teams I work with.
+                </li>
+            </ul>
+        </AboutSection>
+
+        <AboutSection title="My current stack">
+            <ul class="list-disc flex flex-col gap-2 p-1">
+                <li>
+                    <strong>Fullstack</strong>
+                    <span> Astro, Next</span>
+                </li>
+
+                <li>
+                    <strong>Frontend:</strong>
+                    <span> React, Vue, Svelte, Angular</span>
+                </li>
+
+                <li>
+                    <strong>Backend:</strong>
+                    <span> Express, NestJS, Laravel</span>
+                </li>
+
+                <li>
+                    <strong>Database:</strong>
+                    <span> Postgres, MongoDB, Firebase, MySQL, Redis</span>
+                </li>
+
+                <li>
+                    <strong>Other:</strong>
+                    <span> Tailwind, Jest, Playwright</span>
+                </li>
+
+                <li>
+                    <strong>Learning:</strong>
+                    <span> Rust, Go, Bun</span>
+                </li>
+            </ul>
+        </AboutSection>
+
+        <AboutSection title="Contact">
+            <ul class="list-disc flex flex-col gap-2 p-1">
+                <li>
+                    <strong>Twitter:</strong>
+                    <span>
+                        <a
+                            href="https://twitter.com/datyayu"
+                            class="text-blue-500"
+                            target="_blank"
+                        >
+                            @datyayu</a
+                        >
+                    </span>
+                </li>
+
+                <li>
+                    <strong>GitHub:</strong>
+                    <span>
+                        <a
+                            href="https://github.com/yayudev"
+                            class="text-blue-500"
+                            target="_blank"
+                        >
+                            @yayudev</a
+                        >
+                    </span>
+                </li>
+
+                <li>
+                    <strong>LinkedIn:</strong>
+                    <span>
+                        <a
+                            href="https://www.linkedin.com/in/yayudev"
+                            class="text-blue-500"
+                            target="_blank"
+                        >
+                            Arturo Coronel
+                        </a>
+                    </span>
+                </li>
+            </ul>
+        </AboutSection>
+    </main>
+</DefaultLayout>

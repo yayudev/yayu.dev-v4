@@ -1,20 +1,17 @@
 ---
 title: "[Javascript] Object.groupBy" 
-slug: "es-js-object-group-by"
+slug: "en-js-object-group-by"
 pubDate: "Sep 19, 2023"
-excerpt: "Despídete de `.reduce` y `for each` con Object.groupBy"
-heroImage: "/images/blog/js-group-by.jpg"
+excerpt: "Get rid of `.reduce` and `for each` with Object.groupBy"
 ---
 
-# ¿Qué es Object.groupBy?
+# What is Object.groupBy? 
 
-`Object.groupBy` es un nuevo método que se está agregando a `Object` en los navegadores más recientes. Te permite
-agrupar una matriz de objetos por una propiedad.
+`Object.groupBy` is a new method being added to `Object` in latest browsers. It allows you to group an array of objects by a property.  
 
-¡Eso suena genial, pero ¿qué significa?
+Yeah, that's cool but what does it mean?
 
-Por ejemplo, supongamos que tienes una lista de usuarios con una propiedad `country` y deseas agruparlos por país para
-mostrarlos en diferentes secciones de tu página.
+For example, lets suppose you have a list of users with a `country` property, and you want to group them by country to display them in different sections of your page. 
 
 ```js
 const users = [
@@ -26,7 +23,7 @@ const users = [
 ];
 ```
 
-Por lo general, harías algo como esto:
+Usually, you would do something like this:
 
 ```js
 const groupedUsers = {};
@@ -37,46 +34,6 @@ users.forEach((user) => {
   }
   groupedUsers[user.country].push(user);
 });
-// {
-//   USA: [
-//     { name: "John", country: "USA" },
-//     { name: "Jane", country: "USA" },
-//     { name: "George", country: "USA" },
-//   ],
-//   Canada: [
-//     { name: "Bob", country: "Canada" },
-//     { name: "Alice", country: "Canada" },
-//   ],
-// }
-```
-
-o si odias a los miembros de tu equipo:
-
-```js
-const groupedUsers = users.reduce((acc, user) => {
-  if (!acc[user.country]) {
-    acc[user.country] = [];
-  }
-  acc[user.country].push(user);
-  return acc;
-}, {});
-// {
-//   USA: [
-//     { name: "John", country: "USA" },
-//     { name: "Jane", country: "USA" },
-//     { name: "George", country: "USA" },
-//   ],
-//   Canada: [
-//     { name: "Bob", country: "Canada" },
-//     { name: "Alice", country: "Canada" },
-//   ],
-// }
-```
-
-Con `Object.groupBy` puedes hacer esto:
-
-```js
-const groupedUsers = users.groupBy("country");
 
 console.log(groupedUsers);
 // {
@@ -92,10 +49,56 @@ console.log(groupedUsers);
 // }
 ```
 
-¡Eso es todo! 🎉
+or if you hate your team members:
 
-# Soporte
+```js
+const groupedUsers = users.reduce((acc, user) => {
+  if (!acc[user.country]) {
+    acc[user.country] = [];
+  }
+  acc[user.country].push(user);
+  return acc;
+}, {});
 
-Actualmente, `Object.groupBy` solo está disponible en Chrome, Edge y proximamente en Firefox y Safari.
+console.log(groupedUsers);
+// {
+//   USA: [
+//     { name: "John", country: "USA" },
+//     { name: "Jane", country: "USA" },
+//     { name: "George", country: "USA" },
+//   ],
+//   Canada: [
+//     { name: "Bob", country: "Canada" },
+//     { name: "Alice", country: "Canada" },
+//   ],
+// }
+```
 
-Puedes ver el estado de implementación en [caniuse.com](https://caniuse.com/mdn-javascript_builtins_object_groupby).
+This gets the job done, but it's not very readable.
+
+With `Object.groupBy` you can just do this:
+
+```js
+const groupedUsers = Object.groupBy(users, "country");
+
+console.log(groupedUsers);
+// {
+//   USA: [
+//     { name: "John", country: "USA" },
+//     { name: "Jane", country: "USA" },
+//     { name: "George", country: "USA" },
+//   ],
+//   Canada: [
+//     { name: "Bob", country: "Canada" },
+//     { name: "Alice", country: "Canada" },
+//   ],
+// }
+```
+
+Much better, right? 🤩
+
+# Support
+
+This method is not yet supported by some browsers, but it's currently supported by Chrome, Edge and coming up to Safari and Firefox. 
+
+you can check the support status [here](https://caniuse.com/mdn-javascript_builtins_object_groupby).

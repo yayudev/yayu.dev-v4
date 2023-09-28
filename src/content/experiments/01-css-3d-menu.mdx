@@ -9,7 +9,11 @@ import ExperimentsLayout from "../../layouts/Experiments.astro";
 
 <ExperimentsLayout>
 
-<CSS3DMenu slot="demo" />
+<div class="w-full" slot="demo">
+    <CSS3DMenu slot="demo" />
+
+    <p class="text-1xl text-center">(Hover to see effect)</p>
+</div>
 
 <div class="w-full" slot="html">
     ```html
@@ -124,7 +128,6 @@ import ExperimentsLayout from "../../layouts/Experiments.astro";
         }
     }
     ```
-
 </div>
 
 </ExperimentsLayout>

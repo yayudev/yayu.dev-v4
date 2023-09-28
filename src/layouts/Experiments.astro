@@ -1,49 +1,46 @@
 ---
-const showHtml = Astro.slots.has('html');
-const showCss = Astro.slots.has('css');
-const showJs = Astro.slots.has('js');
+const showHtml = Astro.slots.has("html");
+const showCss = Astro.slots.has("css");
+const showJs = Astro.slots.has("js");
 ---
 
 <div class="w-full">
+    <!-- DEMO -->
+    <slot name="demo" />
 
-  <!-- DEMO -->
-  <slot name="demo" />
-
-  <!-- Separator -->
-
-<div class="relative py-5">
-    <div class="absolute inset-0 flex items-center" aria-hidden="true">
-        <div class="w-full border-t border-gray-300"></div>
+    <!-- Separator -->
+    <div class="relative py-5">
+        <div class="absolute inset-0 flex items-center" aria-hidden="true">
+            <div class="w-full border-t border-gray-300"></div>
+        </div>
     </div>
-</div>
 
+    <h2 class="text-center text-2xl py-5">Source Code</h2>
 
-<h2 class="text-center text-2xl py-5">Source Code</h2>
+    {
+        showHtml && (
+            <details>
+                <summary class="py-2">HTML</summary>
+                <slot name="html" />
+            </details>
+        )
+    }
 
+    {
+        showCss && (
+            <details>
+                <summary class="py-2">CSS</summary>
+                <slot name="css" />
+            </details>
+        )
+    }
 
-{showHtml && (
-  <details>
-    <summary>HTML</summary>
-
-    <slot name="html">
-  </details>
-  )}
-
-  {showCss && (
-    <details>
-    <summary>CSS</summary>
-
-    <slot name="css">
-  </details>
-  )}
-
-  {showJs && (
-    <details>
-    <summary>JS</summary>
-
-    <slot name="js">
-  </details>
-
-  )}
-
+    {
+        showJs && (
+            <details>
+                <summary class="py-2">JS</summary>
+                <slot name="js" />
+            </details>
+        )
+    }
 </div>

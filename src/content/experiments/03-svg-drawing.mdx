@@ -4,45 +4,49 @@ description: Interactive SVG drawing using CSS and JS
 pubDate: 2023-09-23
 ---
 
-import Separator from "../../components/shared/Separator.astro";
+import SVGInteractiveDrawing from './demos/svg-interactive-draw.astro';
+import ExperimentsLayout from "../../layouts/Experiments.astro";
 
-<style>{``}</style>
+<ExperimentsLayout>
 
-<div class="container">
-    <svg width="700px" height="273px" viewBox="0 0 526 273" version="1.1">
-        <g
-            id="Page-1"
-            stroke="none"
-            stroke-width="1"
-            fill="none"
-            fill-rule="evenodd"
-        >
-            <g id="trazo-container" stroke="#979797">
-                <path
-                    id="js-trazo-path"
-                    stroke="#333"
-                    stroke-width="5"
-                    d="M53.2773437,35.8203125 C23.3283434,37.5166426 8.27140052,74.0700316 6.51171875,99.4140625 C2.92448215,151.079674 15.2930995,201.542306 70.5625,220.714844 C74.8819615,222.213232 95.581947,226.388329 102.464844,224.4375 C129.485946,216.778872 130.971256,206.976499 147.683594,186.582031 C161.530452,169.684378 175.615445,152.962938 190.339844,136.824219 C226.178179,97.5435089 270.934488,44.2287337 328.429688,37.2539063 C334.070623,36.569596 339.844132,36.5028001 345.476562,37.2539063 C348.463104,37.6521729 351.337993,38.9891279 353.855469,40.6445312 C359.609754,44.4283459 365.303813,48.4739889 370.082031,53.4335937 C373.910454,57.4073476 377.458817,61.9582802 379.375,67.1328125 C382.014075,74.2594707 382.640304,82.0073339 383.460938,89.5625 C384.007605,94.5953978 384.072815,99.7246133 383.460938,104.75 C377.313858,155.236295 316.145635,184.074842 271.808594,189.222656 C244.924808,192.344036 221.373544,176.260065 245.1875,150.960938 C266.274209,128.559144 311.11175,126.345361 337.816406,136.117188 C385.357146,153.513399 430.42973,178.234645 481.726562,180.539062 C490.466538,180.93169 499.374845,181.238381 507.953125,179.519531 C521.823781,176.740236 570.555051,153.181144 571.808594,144.972656 C576.100314,116.869488 576.126978,96.8653278 547.523438,91.1210938 C543.636489,90.3405071 527.72761,88.9336898 523.902344,89.8710938 C509.871587,93.3094134 499.949248,108.721054 493.632812,120.261719 C475.685122,153.053677 473.54309,184.707831 505.816406,208.589844 C516.009508,216.132663 529.168505,220.817738 541.523438,222.402344 C555.625355,224.211013 569.939371,223.816812 584.15625,223.691406 C588.877474,223.649761 593.590027,222.889745 598.207031,221.902344 C599.797494,221.562204 601.774775,221.15971 602.585938,219.75 C603.952089,217.37578 603.591146,214.364583 604.09375,211.671875"
-                ></path>
+<SVGInteractiveDrawing slot="demo" />
+
+
+<div class="w-full" slot="html">
+    ```html
+    <!-- SVG -->
+    <div class="container">
+        <svg width="700px" height="273px" viewBox="0 0 526 273">
+            <g
+                id="Page-1"
+                stroke="none"
+                stroke-width="1"
+                fill="none"
+                fill-rule="evenodd"
+            >
+                <g stroke="#979797">
+                    <path
+                        id="js-path"
+                        stroke="#333"
+                        stroke-width="5"
+                        d="M53.2773437,35.8203125 C23.3283434,37.5166426 8.27140052,74.0700316 6.51171875,99.4140625 C2.92448215,151.079674 15.2930995,201.542306 70.5625,220.714844 C74.8819615,222.213232 95.581947,226.388329 102.464844,224.4375 C129.485946,216.778872 130.971256,206.976499 147.683594,186.582031 C161.530452,169.684378 175.615445,152.962938 190.339844,136.824219 C226.178179,97.5435089 270.934488,44.2287337 328.429688,37.2539063 C334.070623,36.569596 339.844132,36.5028001 345.476562,37.2539063 C348.463104,37.6521729 351.337993,38.9891279 353.855469,40.6445312 C359.609754,44.4283459 365.303813,48.4739889 370.082031,53.4335937 C373.910454,57.4073476 377.458817,61.9582802 379.375,67.1328125 C382.014075,74.2594707 382.640304,82.0073339 383.460938,89.5625 C384.007605,94.5953978 384.072815,99.7246133 383.460938,104.75 C377.313858,155.236295 316.145635,184.074842 271.808594,189.222656 C244.924808,192.344036 221.373544,176.260065 245.1875,150.960938 C266.274209,128.559144 311.11175,126.345361 337.816406,136.117188 C385.357146,153.513399 430.42973,178.234645 481.726562,180.539062 C490.466538,180.93169 499.374845,181.238381 507.953125,179.519531 C521.823781,176.740236 570.555051,153.181144 571.808594,144.972656 C576.100314,116.869488 576.126978,96.8653278 547.523438,91.1210938 C543.636489,90.3405071 527.72761,88.9336898 523.902344,89.8710938 C509.871587,93.3094134 499.949248,108.721054 493.632812,120.261719 C475.685122,153.053677 473.54309,184.707831 505.816406,208.589844 C516.009508,216.132663 529.168505,220.817738 541.523438,222.402344 C555.625355,224.211013 569.939371,223.816812 584.15625,223.691406 C588.877474,223.649761 593.590027,222.889745 598.207031,221.902344 C599.797494,221.562204 601.774775,221.15971 602.585938,219.75 C603.952089,217.37578 603.591146,214.364583 604.09375,211.671875"
+                    ></path>
+                </g>
             </g>
-        </g>
-    </svg>
-</div>
+        </svg>
+    </div>
 
-<div class="container">
+    <!-- Code template -->
     <div id="js-script-text"></div>
-    <pre id="text-content">
-        <code>
-            &lt;path stroke="#000" stroke-width="5" d="…" stroke-dasharray="
-            <span id="dasharray"></span>" stroke-dashoffset="
-            <span id="dashoffset"></span>" /&gt;
-        </code>
-    </pre>
-</div>
+    <template id="js-code-template">
+        <pre><code>
+        &lt;path stroke="#000" stroke-width="5" d="…"
+            stroke-dasharray="<span id="dasharray" />"
+            stroke-dashoffset="<span id="dashoffset" />" /&gt;
+        </code></pre>
+    </template>
 
-{/* Inputs */}
-
-<div class="container w-full min-w-full">
+    <!-- Inputs -->
     <div class="input-group w-full">
         <label>stroke-dasharray</label>
         <input
@@ -63,126 +67,112 @@ import Separator from "../../components/shared/Separator.astro";
             value="0"
         />
     </div>
+    ```
 </div>
 
-<script type="text/javascript">{`
-var path = document.getElementById('js-trazo-path');
-var inputDA = document.getElementById('js-input-dasharray');
-var inputDO = document.getElementById('js-input-dashoffset');
-var template = document.getElementById('js-text-content');
-var codeExample = document.getElementById('js-script-text');
-var pathLength = path.getTotalLength();
-inputDA.max = pathLength;
-inputDO.max = pathLength;
-updateTemplateSpan('dasharray', 0);
-updateTemplateSpan('dashoffset', 0);
-inputDA.addEventListener('input', function(evt) {
-  const value = evt.target.value;
-  const dasharrayValue = value + ' ' + value
-  path.style.strokeDasharray = dasharrayValue;
-  updateTemplateSpan('dasharray', dasharrayValue);
-})
-inputDO.addEventListener('input', function(evt) {
-  const dashoffset = evt.target.value;
-  path.style.strokeDashoffset = dashoffset;
-  updateTemplateSpan('dashoffset', dashoffset);
-})
-function updateTemplateSpan(spanId, value) {
-  var span = template.content.querySelector('#' + spanId);
-  span.textContent = value;
-  var clone = document.importNode(template.content, true);
-  codeExample.innerHTML = '';
-  codeExample.appendChild(clone);
-}
-`}</script>
+<div class="w-full" slot="css">
+    ```css
+    pre {
+        width: 100%;
+        background-color: #333;
+        color: white;
+        padding: 1em 0;
+        box-sizing: border-box;
+    }
 
-<div class="my-8">
-    <Separator />
+    .input-group {
+        width: 100%;
+        margin: 0.5em 0;
+        display: flex;
+        justify-content: space-between;
+        background: #ddd;
+    }
+
+    .input-group label {
+        background: #20c0b1;
+        color: white;
+        padding: 0.5em;
+        width: 200px;
+        display: inline-block;
+    }
+
+    .input-group input {
+        flex: 1;
+        margin: 0 1em;
+    }
+    ```
 </div>
 
-<h2 class="text-center text-2xl py-5">Source Code</h2>
+<div class="w-full" slot="js">
+    ```js
+    /****************
+     * DOM Elements *
+     ****************/
 
-<details>
-<summary>HTML</summary>
+    const $path = document.getElementById("js-path");
+    const $inputDA = document.getElementById("js-input-dasharray");
+    const $inputDO = document.getElementById("js-input-dashoffset");
+    const $template = document.getElementById("js-code-template");
+    const $codeExample = document.getElementById("js-script-text");
 
-````html
-<div>
-    <svg
-        width="700px"
-        height="273px"
-        viewBox="0 0 526 273"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-    >
-        <g
-            id="Page-1"
-            stroke="none"
-            stroke-width="1"
-            fill="none"
-            fill-rule="evenodd"
-        >
-            <g id="trazo-container" stroke="#979797">
-                <path
-                    id="js-trazo-path"
-                    stroke="#333"
-                    stroke-width="5"
-                    d="M53.2773437,35.8203125 C23.3283434,37.5166426 8.27140052,74.0700316 6.51171875,99.4140625 C2.92448215,151.079674 15.2930995,201.542306 70.5625,220.714844 C74.8819615,222.213232 95.581947,226.388329 102.464844,224.4375 C129.485946,216.778872 130.971256,206.976499 147.683594,186.582031 C161.530452,169.684378 175.615445,152.962938 190.339844,136.824219 C226.178179,97.5435089 270.934488,44.2287337 328.429688,37.2539063 C334.070623,36.569596 339.844132,36.5028001 345.476562,37.2539063 C348.463104,37.6521729 351.337993,38.9891279 353.855469,40.6445312 C359.609754,44.4283459 365.303813,48.4739889 370.082031,53.4335937 C373.910454,57.4073476 377.458817,61.9582802 379.375,67.1328125 C382.014075,74.2594707 382.640304,82.0073339 383.460938,89.5625 C384.007605,94.5953978 384.072815,99.7246133 383.460938,104.75 C377.313858,155.236295 316.145635,184.074842 271.808594,189.222656 C244.924808,192.344036 221.373544,176.260065 245.1875,150.960938 C266.274209,128.559144 311.11175,126.345361 337.816406,136.117188 C385.357146,153.513399 430.42973,178.234645 481.726562,180.539062 C490.466538,180.93169 499.374845,181.238381 507.953125,179.519531 C521.823781,176.740236 570.555051,153.181144 571.808594,144.972656 C576.100314,116.869488 576.126978,96.8653278 547.523438,91.1210938 C543.636489,90.3405071 527.72761,88.9336898 523.902344,89.8710938 C509.871587,93.3094134 499.949248,108.721054 493.632812,120.261719 C475.685122,153.053677 473.54309,184.707831 505.816406,208.589844 C516.009508,216.132663 529.168505,220.817738 541.523438,222.402344 C555.625355,224.211013 569.939371,223.816812 584.15625,223.691406 C588.877474,223.649761 593.590027,222.889745 598.207031,221.902344 C599.797494,221.562204 601.774775,221.15971 602.585938,219.75 C603.952089,217.37578 603.591146,214.364583 604.09375,211.671875"
-                ></path>
-            </g>
-        </g>
-    </svg>
+    /*********
+     * State *
+     *********/
 
-    <div id="js-script-text"></div>
+    let strokeDashArray = "20 20";
+    let strokeDashOffset = "0";
 
-    <div class="input-group">
-        <label>stroke-dasharray</label>
-        <input type="range" id="js-input-dasharray" min="0" value="0" />
-    </div>
-    <div class="input-group">
-        <label>stroke-dashoffset</label>
-        <input type="range" id="js-input-dashoffset" min="0" value="0" />
-    </div>
+    /******************
+     * Render updates *
+     ******************/
 
-    <template id="js-code-template">
-        <pre><code>&lt;path stroke="#000" stroke-width="5" d="…"
-  stroke-dasharray="<span id="dasharray"></span>"
-  stroke-dashoffset="<span id="dashoffset"></span>"
-/&gt;</code></pre>
-    </template>
+    function update() {
+        const clone = document.importNode($template.content, true);
+        const $dashArray = clone.querySelector("#dasharray");
+        const $dashOffset = clone.querySelector("#dashoffset");
+
+        $dashArray.innerHTML = strokeDashArray;
+        $dashOffset.innerHTML = strokeDashOffset;
+
+        $path.style.strokeDasharray = strokeDashArray;
+        $path.style.strokeDashoffset = strokeDashOffset;
+
+        $codeExample.innerHTML = "";
+        $codeExample.appendChild(clone);
+    }
+
+    /*********
+     * Init  *
+     *********/
+
+    function init() {
+        const pathLength = $path.getTotalLength();
+        $inputDA.max = pathLength;
+        $inputDO.max = pathLength;
+        update();
+    }
+
+    /*************
+     * Listeners *
+     *************/
+
+    $inputDA.addEventListener("input", (evt) => {
+        const value = evt.target.value;
+        strokeDashArray = `${value} ${value}`;
+        update();
+    });
+
+    $inputDO.addEventListener("input", (evt) => {
+        strokeDashOffset = evt.target.value;
+        update();
+    });
+
+    /*********
+     * Start *
+     *********/
+
+    init();
+    ```
 </div>
-``
-</details>
 
-<details>
-<summary>CSS</summary>
-
-```css
-svg {
-  margin-left: -50px;
-}
-pre {
-  width: 650px;
-  background-color: #333;
-  color: white;
-  padding: 1em;
-  box-sizing: border-box;
-}
-.input-group {
-  width: 650px;
-  margin: .5em 0;
-  display: flex;
-  justify-content: space-between;
-  background: #ddd;
-}
-.input-group label {
-  background: #20c0b1;
-  color: white;
-  padding: .5em;
-  width: 200px;
-}
-````
-
-</details>
-
-<h1>Hello</h1>
+</ExperimentsLayout>

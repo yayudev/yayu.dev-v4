@@ -1,5 +1,5 @@
 ---
-
+const { pathname } = Astro.url;
 ---
 
 <style>
@@ -87,72 +87,84 @@
     />
 </div>
 
-<script type="text/javascript" is:inline>
-    /****************
-     * DOM Elements *
-     ****************/
-
-    const $path = document.getElementById("js-path");
-    const $inputDA = document.getElementById("js-input-dasharray");
-    const $inputDO = document.getElementById("js-input-dashoffset");
-    const $template = document.getElementById("js-code-template");
-    const $codeExample = document.getElementById("js-script-text");
-
-    /*********
-     * State *
-     *********/
-
-    let strokeDashArray = "20 20";
-    let strokeDashOffset = "0";
-
-    /******************
-     * Render updates *
-     ******************/
-
-    function update() {
-        const clone = document.importNode($template.content, true);
-        const $dashArray = clone.querySelector("#dasharray");
-        const $dashOffset = clone.querySelector("#dashoffset");
-
-        $dashArray.innerHTML = strokeDashArray;
-        $dashOffset.innerHTML = strokeDashOffset;
-
-        $path.style.strokeDasharray = strokeDashArray;
-        $path.style.strokeDashoffset = strokeDashOffset;
-
-        $codeExample.innerHTML = "";
-        $codeExample.appendChild(clone);
-    }
-
-    /*********
-     * Init  *
-     *********/
-
+<script is:inline>
     function init() {
-        const pathLength = $path.getTotalLength();
-        $inputDA.max = pathLength;
-        $inputDO.max = pathLength;
-        update();
+        /****************
+         * DOM Elements *
+         ****************/
+
+        const $path = document.querySelector("#js-path");
+        const $inputDA = document.querySelector("#js-input-dasharray");
+        const $inputDO = document.querySelector("#js-input-dashoffset");
+        const $template = document.querySelector("#js-code-template");
+        const $codeExample = document.querySelector("#js-script-text");
+
+        /*********
+         * State *
+         *********/
+
+        let strokeDashArray = "20 20";
+        let strokeDashOffset = "0";
+
+        /******************
+         * Render updates *
+         ******************/
+
+        function update() {
+            const clone = document.importNode($template.content, true);
+            const $dashArray = clone.querySelector("#dasharray");
+            const $dashOffset = clone.querySelector("#dashoffset");
+
+            $dashArray.innerHTML = strokeDashArray;
+            $dashOffset.innerHTML = strokeDashOffset;
+
+            $path.style.strokeDasharray = strokeDashArray;
+            $path.style.strokeDashoffset = strokeDashOffset;
+
+            $codeExample.innerHTML = "";
+            $codeExample.appendChild(clone);
+        }
+
+        /*************
+         * Listeners *
+         *************/
+
+        function onInputDA(evt) {
+            const value = evt.target.value;
+            strokeDashArray = `${value} ${value}`;
+            update();
+        }
+
+        function onInputDO(evt) {
+            strokeDashOffset = evt.target.value;
+            update();
+        }
+
+        function initializeListeners() {
+            // Remove old listeners
+            $inputDA.removeEventListener("input", onInputDA);
+            $inputDO.removeEventListener("input", onInputDO);
+
+            // Add new listeners
+            $inputDA.addEventListener("input", onInputDA);
+            $inputDO.addEventListener("input", onInputDO);
+        }
+
+        /*********
+         * Init  *
+         *********/
+
+        function start() {
+            const pathLength = $path.getTotalLength();
+            $inputDA.max = pathLength;
+            $inputDO.max = pathLength;
+
+            initializeListeners();
+            update();
+        }
+
+        start();
     }
 
-    /*************
-     * Listeners *
-     *************/
-
-    $inputDA.addEventListener("input", (evt) => {
-        const value = evt.target.value;
-        strokeDashArray = `${value} ${value}`;
-        update();
-    });
-
-    $inputDO.addEventListener("input", (evt) => {
-        strokeDashOffset = evt.target.value;
-        update();
-    });
-
-    /*********
-     * Start *
-     *********/
-
-    init();
+    window._init = init;
 </script>

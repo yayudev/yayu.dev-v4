@@ -5,7 +5,7 @@ import ExperimentsListItem from "../../components/experiments/ExperimentsListIte
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 
 const experiments = (await getCollection("experiments")).sort(
-    (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 const featuredExperiment = experiments[0];
 ---

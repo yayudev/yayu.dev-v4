@@ -7,9 +7,10 @@ import Separator from "../components/shared/Separator.astro";
 export interface Props {
     slug: CollectionEntry<"blog">["slug"];
     data: CollectionEntry<"blog">["data"];
+    showImage?: boolean;
 }
 
-const { slug, data } = Astro.props;
+const { slug, data, showImage = true } = Astro.props;
 const { title, description, pubDate, updatedDate, heroImage, excerpt } = data;
 ---
 
@@ -18,7 +19,7 @@ const { title, description, pubDate, updatedDate, heroImage, excerpt } = data;
 
     <BlogpostHeader
         title={title}
-        image={heroImage}
+        image={showImage && heroImage}
         slug={slug}
         date={pubDate}
     />

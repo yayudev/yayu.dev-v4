@@ -47,14 +47,19 @@
     <div id="circle" class="circle"></div>
 </div>
 
-<script type="application/javascript" is:inline>
-    var $circle = document.querySelector("#circle");
-    var $container = document.querySelector("#container");
-    var CIRCLE_RADIUS = 200;
-    $container.addEventListener("mousemove", (event) => {
-        const x = event.offsetX;
-        const y = event.offsetY;
-        $circle.style.top = y - CIRCLE_RADIUS / 2 + "px";
-        $circle.style.left = x - CIRCLE_RADIUS / 2 + "px";
-    });
+<script is:inline>
+    function init() {
+        const $circle = document.querySelector("#circle");
+        const $container = document.querySelector("#container");
+        const CIRCLE_RADIUS = 200;
+
+        $container.addEventListener("mousemove", (event) => {
+            const x = event.offsetX;
+            const y = event.offsetY;
+            $circle.style.top = y - CIRCLE_RADIUS / 2 + "px";
+            $circle.style.left = x - CIRCLE_RADIUS / 2 + "px";
+        });
+    }
+
+    window._init = init;
 </script>

@@ -2,11 +2,15 @@
 const showHtml = Astro.slots.has("html");
 const showCss = Astro.slots.has("css");
 const showJs = Astro.slots.has("js");
+
+const { slug } = Astro.props;
 ---
 
 <div class="w-full">
     <!-- DEMO -->
-    <slot name="demo" />
+    <div transition:name={`hero-image-${slug}`}>
+        <slot name="demo" />
+    </div>
 
     <!-- Separator -->
     <div class="relative py-5">
@@ -43,4 +47,15 @@ const showJs = Astro.slots.has("js");
             </details>
         )
     }
+
+    <script>
+        document.addEventListener("astro:page-load", (event) => {
+            const regex = /\/playground\/.*/;
+            const path = event.target.location.pathname;
+
+            if (!regex.test(path)) return;
+
+            window?._init();
+        });
+    </script>
 </div>

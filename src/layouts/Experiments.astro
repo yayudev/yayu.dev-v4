@@ -53,9 +53,14 @@ const { slug } = Astro.props;
             const regex = /\/playground\/.*/;
             const path = event.target.location.pathname;
 
-            if (!regex.test(path)) return;
+            if (!regex.test(path)) {
+                window._ongaku?.stop();
+                window._init = () => {};
+            }
 
-            window?._init();
+            requestIdleCallback(() => {
+                window?._init();
+            });
         });
     </script>
 </div>

@@ -1,0 +1,708 @@
+---
+
+---
+
+<link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Exo+2:300,400,700"
+    rel="stylesheet"
+/>
+<style>
+    .wrapper {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-width: 100%;
+        aspect-ratio: 3/2;
+        overflow: hidden;
+        font-family: "exo 2", sans-serif, arial;
+        background-image: url("https://yayudev.github.io/music-visualizer/images/bg.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        position: relative;
+    }
+
+    .wrapper:after {
+        background: rgba(0, 0, 0, 0.3);
+        content: "";
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+    .container {
+        position: absolute;
+        bottom: 40px;
+        left: 40px;
+        width: 499px;
+    }
+
+    .canvas {
+        position: absolute;
+        top: -110px;
+        left: 0;
+    }
+
+    .song-info {
+        display: inline-flex;
+        background: rgba(0, 0, 0, 0.5);
+        width: 100%;
+    }
+
+    .song-image-container {
+        position: relative;
+    }
+
+    .song-image {
+        width: 75px;
+        height: 75px;
+        padding: 3px;
+        border: 1px solid white;
+    }
+
+    .song-text {
+        margin-left: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding: 0.5em 0;
+        box-sizing: border-box;
+    }
+
+    .song-title {
+        font-size: 1.75em;
+        color: #ffffff;
+        margin: 0;
+        font-weight: normal;
+    }
+
+    .song-artist {
+        font-size: 1.2em;
+        margin: 0;
+        font-weight: lighter;
+        color: #d4d4d4;
+    }
+
+    .song-progress {
+        width: 100%;
+        height: 0.7em;
+        border: 1px solid white;
+        box-sizing: border-box;
+        margin: 0 0 2px 0;
+        padding: 1px;
+        cursor: pointer;
+    }
+
+    .song-current-progress {
+        background: white;
+        height: 100%;
+        width: 0;
+    }
+
+    .song-icon {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        font-size: 4em;
+        color: rgba(0, 0, 0, 0.5);
+        transition: 200ms color ease-in-out;
+        z-index: 9;
+        cursor: pointer;
+    }
+
+    .song-image-container:after {
+        content: "";
+        width: 75px;
+        height: 75px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0);
+        transition: 200ms background ease-in-out;
+        cursor: pointer;
+    }
+
+    .song-image-container:hover:after {
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .song-image-container:hover .song-icon {
+        color: #d3d3d3;
+    }
+
+    .song-icon.animate {
+        animation: 2500ms loading infinite;
+        animation-timing-function: linear;
+        will-change: transform;
+    }
+
+    @keyframes loading {
+        from {
+            transform: rotateZ(0deg);
+        }
+        to {
+            transform: rotateZ(360deg);
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        .container {
+            width: 300px;
+        }
+
+        .canvas {
+            width: 300px;
+            top: -70px;
+        }
+    }
+
+    @media screen and (max-width: 1000px) {
+        .container {
+            bottom: 10px;
+            right: 0;
+            left: 0;
+            margin: 0 auto;
+        }
+    }
+
+    .file-drop {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background 300ms ease-in-out;
+    }
+
+    .drag-text {
+        color: white;
+        text-align: center;
+        transition: opacity 300ms ease-in-out;
+        opacity: 0;
+    }
+
+    .drag-active .drag-text {
+        opacity: 1;
+    }
+
+    .file-drop.drag-active {
+        background: rgba(0, 0, 0, 0.5);
+    }
+</style>
+
+<div class="wrapper">
+    <div class="file-drop" id="js-file-input">
+        <h1 class="drag-text">Drop audio file to play</h1>
+    </div>
+
+    <div class="container">
+        <canvas class="canvas" id="js-canvas" width="499px" height="105px"
+        ></canvas>
+
+        <div class="song-progress" id="js-progress">
+            <div class="song-current-progress" id="js-bar"></div>
+        </div>
+
+        <div class="song-info">
+            <div class="song-image-container" id="js-play-icon-container">
+                <i class="material-icons song-icon animate" id="js-play-icon"
+                    >autorenew</i
+                >
+                <img
+                    src="https://yayudev.github.io/music-visualizer/images/album.jpg"
+                    alt="album cover"
+                    id="js-song-cover"
+                    class="song-image"
+                />
+            </div>
+
+            <div class="song-text">
+                <h2 class="song-title" id="js-song-name">8films</h2>
+                <h2 class="song-artist" id="js-song-artist">Uchu conbini</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script is:inline client:idle>
+    function init() {
+        class Ongaku {
+            constructor(opts) {
+                if (!window.AudioContext && !window.webkitAudioContext) {
+                    throw new Error("[Ongaku] Web Audio API not supported.");
+                }
+
+                this._audioCtx = window._audioCtx =
+                    window._audioCtx ||
+                    new (window.AudioContext || window.webkitAudioContext)();
+                this._callbacks = opts || {};
+                this._volume =
+                    opts &&
+                    opts.volume !== undefined &&
+                    opts.volume >= 0 &&
+                    opts.volume <= 100
+                        ? opts.volume / 100
+                        : 1;
+
+                this._source;
+                this._currentAudio;
+                this._onPausePlaybackTime;
+                this._startTime;
+                this._isPlaying;
+                this._buffer;
+                this._volumeGainNode = this._audioCtx.createGain();
+                this._connectedNodes = [];
+
+                this._loadAudio = this._loadAudio.bind(this);
+                this._onEnd = this._onEnd.bind(this);
+                this._getUpdatedPlaybackTime =
+                    this._getUpdatedPlaybackTime.bind(this);
+
+                this.playAudio = this.playAudio.bind(this);
+                this.play = this.play.bind(this);
+                this.pause = this.pause.bind(this);
+                this.seekPercentage = this.seekPercentage.bind(this);
+                this.seek = this.seek.bind(this);
+                this.stop = this.stop.bind(this);
+                this.setVolume = this.setVolume.bind(this);
+                this.mute = this.mute.bind(this);
+                this.getPlaybackTime = this.getPlaybackTime.bind(this);
+                this.isPlaying = this.isPlaying.bind(this);
+                this.getCurrentBufferDuration =
+                    this.getCurrentBufferDuration.bind(this);
+                this.playFromLocalBuffer = this.playFromLocalBuffer.bind(this);
+            }
+
+            _loadAudio(fileUrl) {
+                return fetch(fileUrl)
+                    .then((response) => response.arrayBuffer())
+                    .then(
+                        (buffer) =>
+                            new Promise((resolve) => {
+                                this._audioCtx.decodeAudioData(
+                                    buffer,
+                                    (decodedBuffer) => resolve(decodedBuffer),
+                                );
+                            }),
+                    );
+            }
+
+            _onEnd() {
+                this.stop();
+
+                if (this._callbacks.onPlaybackEnd) {
+                    this._callbacks.onPlaybackEnd();
+                }
+            }
+
+            _getUpdatedPlaybackTime() {
+                return (
+                    (Date.now() - this._startTime) / 1000 +
+                    this._onPausePlaybackTime
+                );
+            }
+
+            playFromLocalBuffer(buffer) {
+                this._audioCtx.decodeAudioData(buffer, (decodedBuffer) => {
+                    this._buffer = decodedBuffer;
+
+                    if (this._callbacks.onBufferLoaded) {
+                        this._callbacks.onBufferLoaded();
+                    }
+
+                    this.play();
+                });
+            }
+
+            getContext() {
+                return this._audioCtx;
+            }
+
+            connectNode(node) {
+                this._connectedNodes.push(node);
+            }
+
+            playAudio(fileUrl) {
+                if (!fileUrl) {
+                    return console.error(
+                        "[Ongaku] A file must be specified when using playAudio",
+                    );
+                }
+
+                this.stop();
+                this._currentAudio = fileUrl;
+                this._isPlaying = false;
+                this._onPausePlaybackTime = 0;
+
+                return this._loadAudio(fileUrl)
+                    .then((buffer) => {
+                        this._buffer = buffer;
+
+                        if (this._callbacks.onBufferLoaded) {
+                            this._callbacks.onBufferLoaded();
+                        }
+
+                        this.play();
+                    })
+                    .catch((e) => console.error(e));
+            }
+
+            loadAudio(fileUrl) {
+                return this.playAudio(fileUrl).then(() => {
+                    this.pause();
+                });
+            }
+
+            play() {
+                if (this._isPlaying) return;
+                if (!this._buffer) {
+                    return console.error(
+                        "[Ongaku] You need to load an audio file before using play()",
+                    );
+                }
+
+                this._volumeGainNode.gain.value = this._volume;
+
+                this._source = this._audioCtx.createBufferSource();
+                this._source.buffer = this._buffer;
+                this._source.connect(this._volumeGainNode);
+                this._volumeGainNode.connect(this._audioCtx.destination);
+                this._source.onended = () => this._onEnd();
+
+                this._connectedNodes.forEach((node) => {
+                    this._source.connect(node);
+                });
+
+                this._isPlaying = true;
+                this._startTime = Date.now();
+                this._source.start(0, this._onPausePlaybackTime); // Play at current offset (defaults to 0)
+
+                if (this._callbacks.onPlaybackStart) {
+                    this._callbacks.onPlaybackStart();
+                }
+            }
+
+            pause() {
+                if (!this._isPlaying) return;
+                if (!this._source) return;
+
+                this._source.onended = () => {};
+                this._source.stop();
+                this._isPlaying = false;
+                this._pauseTime = Date.now();
+                this._onPausePlaybackTime = this._getUpdatedPlaybackTime();
+
+                if (this._callbacks.onPlaybackPause) {
+                    this._callbacks.onPlaybackPause();
+                }
+            }
+
+            seekPercentage(percentage) {
+                if (percentage < 0 || percentage > 100) {
+                    return console.error(
+                        "[Ongaku] Error, trying to seek to an invalid percentage",
+                    );
+                }
+
+                if (!this._source) {
+                    return console.error(
+                        "[Ongaku] Error, you should load an audio file before seeking",
+                    );
+                }
+
+                const time = this._source.buffer.duration * (percentage / 100);
+
+                this.seek(time);
+            }
+
+            seek(time) {
+                if (time === undefined) return;
+
+                if (!this._source) {
+                    return console.error(
+                        "[Ongaku] Error, you should load an audio file before seeking",
+                    );
+                }
+
+                if (time > this._source.buffer.duration) {
+                    console.error(
+                        "[Ongaku] Error, trying to seek beyond the current audio duration",
+                    );
+                    return;
+                }
+
+                if (this._isPlaying) {
+                    this.pause();
+                    this._onPausePlaybackTime = time;
+                    setTimeout(this.play, 100); // <-- Browser requires a little time to process the pause and seek.
+                } else {
+                    this._onPausePlaybackTime = time;
+                }
+
+                if (this._callbacks.onPlaybackSeek) {
+                    this._callbacks.onPlaybackSeek(time);
+                }
+            }
+
+            stop() {
+                if (!this._isPlaying) return;
+                if (!this._source) return;
+
+                this._source.onended = () => {};
+                this._source.stop(0);
+                this._isPlaying = false;
+                this._onPausePlaybackTime = 0;
+
+                if (this._callbacks.onPlaybackStopped) {
+                    this._callbacks.onPlaybackStopped();
+                }
+            }
+
+            setVolume(volumeLevel) {
+                if (volumeLevel < 0 || volumeLevel > 100) {
+                    return console.error(
+                        "[Ongaku] Error, volume can be set only with values between 0 and 100",
+                    );
+                }
+
+                this._volume = volumeLevel / 100;
+                this._volumeGainNode.gain.value = this._volume;
+
+                if (this._callbacks.onVolumeChange) {
+                    this._callbacks.onVolumeChange(volumeLevel);
+                }
+            }
+
+            mute() {
+                this._volumeGainNode.gain.value = 0;
+            }
+
+            unmute() {
+                this._volumeGainNode.gain.value = this._volume;
+            }
+
+            getPlaybackTime() {
+                if (!this._source) {
+                    console.error(
+                        "[Ongaku] Error, you should load an audio file before getting the playback time",
+                    );
+                    return 0;
+                }
+
+                if (this._isPlaying) {
+                    return this._getUpdatedPlaybackTime();
+                }
+
+                return this._onPausePlaybackTime;
+            }
+
+            isPlaying() {
+                return this._isPlaying;
+            }
+
+            getCurrentBufferDuration() {
+                if (!this._buffer) {
+                    console.error(
+                        "[Ongaku] Error, you should load an audio file before getting the duration",
+                    );
+                    return 0;
+                }
+
+                return this._buffer.duration;
+            }
+        }
+
+        // Create audio context
+        if (!window.AudioContext) {
+            if (!window.webkitAudioContext) {
+                alert("no audiocontext found");
+            }
+            window.AudioContext = window.webkitAudioContext;
+        }
+
+        var CANVAS_HEIGHT = 100;
+        var SKIPPED_VALUES = 3;
+        var BAR_WIDTH = 8;
+        var AUDIO_FILE =
+            "https://s3-us-west-1.amazonaws.com/experiments-static/02+8films.mp3";
+
+        var $canvas = document.getElementById("js-canvas");
+        var $progressContainer = document.getElementById("js-progress");
+        var $progressBar = document.getElementById("js-bar");
+        var $playIcon = document.getElementById("js-play-icon");
+        var $playIconContainer = document.getElementById(
+            "js-play-icon-container",
+        );
+        var $fileInput = document.getElementById("js-file-input");
+        var $songName = document.getElementById("js-song-name");
+        var $songArtist = document.getElementById("js-song-artist");
+        var $songCover = document.getElementById("js-song-cover");
+
+        // get the context from the canvas to draw on
+        var canvasCtx = $canvas.getContext("2d");
+        var javascriptNode = window.javascriptNode;
+        var analyser = window.analyzer;
+
+        var ongaku = (window._ongaku =
+            window._ongaku ??
+            new Ongaku({
+                onPlaybackEnd: function () {
+                    ongaku.playAudio(AUDIO_FILE);
+                },
+                onPlaybackPause: function () {
+                    clearSpectrum();
+                    $playIcon.innerText = "play_arrow";
+                },
+                onPlaybackStart: function () {
+                    $playIcon.innerText = "pause";
+                },
+                onBufferLoaded: function () {
+                    $playIcon.classList.remove("animate");
+                },
+            }));
+
+        ongaku._callbacks.onPlaybackPause = () => {
+            clearSpectrum();
+            $playIcon.innerText = "play_arrow";
+        };
+        ongaku._callbacks.onPlaybackStart = () => {
+            $playIcon.innerText = "pause";
+        };
+        ongaku._callbacks.onBufferLoaded = () => {
+            $playIcon.classList.remove("animate");
+        };
+
+        console.log("INIT");
+
+        setupAnalyser(ongaku.getContext());
+        clearSpectrum();
+        ongaku.loadAudio(AUDIO_FILE);
+
+        function setupAnalyser(context) {
+            // setup a javascript node
+            javascriptNode = window.javascriptNode =
+                context.createScriptProcessor(2048, 1, 1);
+            // connect to destination, else it isn't called
+            javascriptNode.connect(context.destination);
+
+            // setup a analyzer
+            analyser = window.analyzer = context.createAnalyser();
+            analyser.smoothingTimeConstant = 0.3;
+            analyser.fftSize = 512;
+
+            // create a buffer source node
+            ongaku.connectNode(analyser);
+            analyser.connect(javascriptNode);
+        }
+
+        javascriptNode.onaudioprocess = function () {
+            if (!ongaku.isPlaying()) return;
+
+            // get the average for the first channel
+            var array = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(array);
+
+            // Draw the spectrum
+            drawSpectrum(array);
+            updateProgress();
+        };
+
+        function drawSpectrum(array) {
+            // clear the current state
+            canvasCtx.clearRect(0, 0, 1000, CANVAS_HEIGHT * 2);
+            canvasCtx.fillStyle = "#ffffff";
+
+            // Draw new spectrum
+            array.forEach(function (value, index) {
+                if (index % SKIPPED_VALUES !== 0) return;
+
+                var x =
+                    (index / SKIPPED_VALUES) *
+                    (BAR_WIDTH + (1 / 5) * BAR_WIDTH);
+                var y = CANVAS_HEIGHT - Math.max(value - 100, 0) / 5;
+
+                canvasCtx.fillRect(x, y, BAR_WIDTH, CANVAS_HEIGHT);
+            });
+        }
+
+        function clearSpectrum() {
+            canvasCtx.clearRect(0, 0, 1000, CANVAS_HEIGHT);
+            canvasCtx.fillStyle = "#ffffff";
+
+            var array = new Array(256).fill(0);
+
+            array.forEach(function (_, index) {
+                if (index % SKIPPED_VALUES !== 0) return;
+
+                var x =
+                    (index / SKIPPED_VALUES) *
+                    (BAR_WIDTH + (1 / 5) * BAR_WIDTH);
+
+                canvasCtx.fillRect(x, CANVAS_HEIGHT, BAR_WIDTH, CANVAS_HEIGHT);
+            });
+        }
+
+        function updateProgress() {
+            var totalDuration = ongaku.getCurrentBufferDuration();
+            var currentProgress = ongaku.getPlaybackTime();
+
+            var progressPercentage = (currentProgress / totalDuration) * 100;
+
+            $progressBar.style.width = progressPercentage + "%";
+        }
+
+        /***************
+         **  LISTENERS **
+         ****************/
+
+        $progressContainer.addEventListener("click", function (event) {
+            const percentage = (event.offsetX / 499) * 100;
+            ongaku.seekPercentage(percentage);
+        });
+
+        $playIconContainer.addEventListener("click", function () {
+            if (ongaku.isPlaying()) {
+                ongaku.pause();
+            } else {
+                ongaku.play();
+            }
+        });
+
+        $fileInput.addEventListener("dragover", function (evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+            evt.dataTransfer.dropEffect = "copy";
+            $fileInput.classList.add("drag-active");
+        });
+
+        $fileInput.addEventListener("dragleave", function (evt) {
+            $fileInput.classList.remove("drag-active");
+        });
+
+        $fileInput.addEventListener("drop", function (evt) {
+            evt.stopPropagation();
+            evt.preventDefault();
+            ongaku.stop();
+
+            $fileInput.classList.remove("drag-active");
+
+            var file = evt.dataTransfer.files[0];
+            $songName.innerText = file.name.replace(/\.[0-9a-z]+$/, "");
+            $songArtist.innerText = "(Local file)";
+            $songCover.src = "./images/default-album.png";
+
+            var reader = new FileReader();
+
+            reader.onload = function (evt) {
+                ongaku.playFromLocalBuffer(evt.target.result);
+            };
+
+            reader.readAsArrayBuffer(file);
+        });
+    }
+
+    window._init = init;
+</script>

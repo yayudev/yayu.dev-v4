@@ -1,62 +1,25 @@
 ---
-title: CSS 3D Menu
-description: A 3D interactive menu with just CSS
-pubDate: 2023-09-23
+
 ---
 
-import CSS3DMenu from "./demos/css-3d-menu.astro";
-import ExperimentsLayout from "../../layouts/Experiments.astro";
-
-<ExperimentsLayout>
-
-<CSS3DMenu slot="demo" />
-
-<div class="w-full" slot="html">
-    ```html
-    <ul class="list">
-        <li class="list-item" data-icon="📝" style="--z-pos:5">
-            <a href="#">Blog</a>
-        </li>
-        <li class="list-item" data-icon="📚" style="--z-pos:4">
-            <a href="#">Notes</a>
-        </li>
-        <li class="list-item" data-icon="📖" style="--z-pos:3">
-            <a href="#">Books</a>
-        </li>
-        <li class="list-item" data-icon="📄" style="--z-pos:2">
-            <a href="#">Resume</a>
-        </li>
-        <li class="list-item" data-icon="📬" style="--z-pos:1">
-            <a href="#">Contact</a>
-        </li>
-    </ul>
-    ```
-</div>
-
-<div class="w-full" slot="css">
-    ```css
-    :root {
+<style>
+    .list {
+        margin: 3rem auto 5rem auto;
         --box-background: #555c69;
         --highlighted-background: #6674d5;
-        --animation-duration: 300ms;
-
+        --animation-duration: 250ms;
         font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
         line-height: 1.5;
         font-weight: 400;
-
         font-synthesis: none;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         -webkit-text-size-adjust: 100%;
-    }
-
-    body {
         display: flex;
+        flex-direction: column;
         place-items: center;
         place-content: center;
-        width: 100vw;
-        height: 100vh;
     }
 
     .list-item {
@@ -66,7 +29,6 @@ import ExperimentsLayout from "../../layouts/Experiments.astro";
         color: white;
         position: relative;
         width: 200px;
-
         z-index: var(--z-pos);
         transform: skewY(-15deg);
         transition:
@@ -84,14 +46,16 @@ import ExperimentsLayout from "../../layouts/Experiments.astro";
             place-items: center;
             place-content: center;
             pointer-events: none;
-
             width: 100%;
             height: 100%;
             position: absolute;
             top: -100%;
             left: -20px;
-
-            background-color: color-mix(in srgb, var(--box-background), white 10%);
+            background-color: color-mix(
+                in srgb,
+                var(--box-background),
+                white 10%
+            );
             transform: skewX(45deg);
             transition: background-color var(--animation-duration) ease-in-out;
         }
@@ -105,13 +69,16 @@ import ExperimentsLayout from "../../layouts/Experiments.astro";
             display: flex;
             place-items: center;
             place-content: center;
-
             width: 40px;
             height: 100%;
             position: absolute;
             top: -20px;
             left: -40px;
-            background-color: color-mix(in srgb, var(--box-background), black 10%);
+            background-color: color-mix(
+                in srgb,
+                var(--box-background),
+                black 10%
+            );
             transform: skewY(45deg);
             transition: background-color var(--animation-duration) ease-in-out;
         }
@@ -123,8 +90,24 @@ import ExperimentsLayout from "../../layouts/Experiments.astro";
             text-decoration: none;
         }
     }
-    ```
+</style>
 
-</div>
+{/* Experiment display */}
 
-</ExperimentsLayout>
+<ul class="list">
+    <li class="list-item" data-icon="📝" style="--z-pos:5">
+        <a href="#">Blog</a>
+    </li>
+    <li class="list-item" data-icon="📚" style="--z-pos:4">
+        <a href="#">Notes</a>
+    </li>
+    <li class="list-item" data-icon="📖" style="--z-pos:3">
+        <a href="#">Books</a>
+    </li>
+    <li class="list-item" data-icon="📄" style="--z-pos:2">
+        <a href="#">Resume</a>
+    </li>
+    <li class="list-item" data-icon="📬" style="--z-pos:1">
+        <a href="#">Contact</a>
+    </li>
+</ul>

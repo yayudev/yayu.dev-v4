@@ -692,7 +692,8 @@
             var file = evt.dataTransfer.files[0];
             $songName.innerText = file.name.replace(/\.[0-9a-z]+$/, "");
             $songArtist.innerText = "(Local file)";
-            $songCover.src = "./images/default-album.png";
+            $songCover.src =
+                "https://raw.githubusercontent.com/yayudev/music-visualizer/master/images/default-album.png";
 
             var reader = new FileReader();
 

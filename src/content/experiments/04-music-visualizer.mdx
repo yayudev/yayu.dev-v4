@@ -9,5 +9,13 @@ import ExperimentsLayout from "../../layouts/Experiments.astro";
 import MusicVisualizer from "./_demos/music-visualizer.astro";
 
 <ExperimentsLayout slug="04-music-visualizer">
-    <MusicVisualizer  slot="demo" />
+
+    <div slot="demo">
+        <MusicVisualizer  />
+        <p class="text-xl px-2 py-6 text-center">(Click play to start the music or drag and drop your own music file.)</p>
+    </div>
+
+    <p slot="external-repo" class="text-center text-blue-600 text-xl pb-6 underline underline-offset-8">
+        <a target="_blank" href="https://github.com/yayudev/music-visualizer">See on Github</a>
+    </p>
 </ExperimentsLayout>

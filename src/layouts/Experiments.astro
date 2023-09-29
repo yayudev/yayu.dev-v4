@@ -2,6 +2,7 @@
 const showHtml = Astro.slots.has("html");
 const showCss = Astro.slots.has("css");
 const showJs = Astro.slots.has("js");
+const showExternalRepo = Astro.slots.has("external-repo");
 
 const { slug } = Astro.props;
 ---
@@ -47,6 +48,8 @@ const { slug } = Astro.props;
             </details>
         )
     }
+
+    {showExternalRepo && <slot name="external-repo" />}
 
     <script>
         document.addEventListener("astro:page-load", (event) => {

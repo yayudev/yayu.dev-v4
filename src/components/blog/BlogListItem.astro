@@ -24,7 +24,7 @@ const { date, image, title, slug, excerpt, featured = false } = Astro.props;
                     alt={title}
                     class="absolute inset-0 h-full w-full rounded-xl bg-gray-50 object-cover"
                     transition:name={`blog-image-${slug}`}
-                    transition:animation="initial"
+                    transition:animate="initial"
                 />
                 <div
                     class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10"
@@ -36,7 +36,7 @@ const { date, image, title, slug, excerpt, featured = false } = Astro.props;
                     <p
                         class="pointer-events-none block font-medium text-gray-500"
                         transition:name={`blog-date-${slug}`}
-                        transition:animation="initial"
+                        transition:animate="initial"
                     >
                         <FormattedDate date={date} />
                     </p>
@@ -45,7 +45,7 @@ const { date, image, title, slug, excerpt, featured = false } = Astro.props;
                     <h2
                         class="text-2xl font-semibold leading-6 text-gray-900 group-hover:text-gray-600"
                         transition:name={`blog-title-${slug}`}
-                        transition:animation="initial"
+                        transition:animate="initial"
                     >
                         <span class="absolute inset-0"></span>
                         {title}

@@ -24,20 +24,23 @@ const { date, image, title, slug, featured = false } = Astro.props;
                 src={image}
                 alt=""
                 class="pointer-events-none object-cover"
-                transition:name={`hero-image-${slug}`}
+                transition:name={`experiment-image-${slug}`}
+                transition:animate="initial"
             />
         </div>
 
         <div class={featured ? "text-center text-md" : "text-sm"}>
             <p
-                class="pointer-events-none mt-2 block truncate font-medium text-gray-900"
-                transition:name={`experiment-title-${slug}`}
+                class="pointer-events-none mb-0 mt-2 block truncate font-medium text-gray-900"
+                transition:name={`blog-title-${slug}`}
+                transition:animate="initial"
             >
                 {title}
             </p>
             <p
-                class="pointer-events-none block font-medium text-gray-500"
-                transition:name={`experiment-date-${slug}`}
+                class="pointer-events-none block font-medium text-gray-500 m-0"
+                transition:name={`blog-date-${slug}`}
+                transition:animate="initial"
             >
                 <FormattedDate date={date} />
             </p>

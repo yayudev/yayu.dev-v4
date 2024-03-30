@@ -19,7 +19,7 @@ const { image, title, date, slug } = Astro.props;
                 src={image}
                 alt={title}
                 transition:name={`blog-image-${slug}`}
-                transition:animation="initial"
+                transition:animate="initial"
             />
         )
     }
@@ -29,14 +29,14 @@ const { image, title, date, slug } = Astro.props;
             <h1
                 class="line-clamp-3 text-4xl font-bold text-gray-900 py-1"
                 transition:name={`blog-title-${slug}`}
-                transition:animation="initial"
+                transition:animate="initial"
             >
                 {title}
             </h1>
             <p
                 class="pointer-events-none block font-medium text-gray-500"
                 transition:name={`blog-date-${slug}`}
-                transition:animation="initial"
+                transition:animateF="initial"
             >
                 <FormattedDate date={date} />
             </p>

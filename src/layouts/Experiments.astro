@@ -1,4 +1,5 @@
 ---
+import Separator from "../components/shared/Separator.astro";
 const showHtml = Astro.slots.has("html");
 const showCss = Astro.slots.has("css");
 const showJs = Astro.slots.has("js");
@@ -9,16 +10,14 @@ const { slug } = Astro.props;
 
 <div class="w-full">
     <!-- DEMO -->
-    <div transition:name={`hero-image-${slug}`}>
+    <div
+        transition:name={`experiment-image-${slug}`}
+        transition:animate="slide"
+    >
         <slot name="demo" />
     </div>
 
-    <!-- Separator -->
-    <div class="relative py-5">
-        <div class="absolute inset-0 flex items-center" aria-hidden="true">
-            <div class="w-full border-t border-gray-300"></div>
-        </div>
-    </div>
+    <Separator/>
 
     <h2 class="text-center text-2xl py-5">Source Code</h2>
 

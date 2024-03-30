@@ -9,9 +9,10 @@ export interface Props {
     title: string;
     description: string;
     fullWidth?: boolean;
+    hideFooter?: boolean;
 }
 
-const { title, description, fullWidth = false } = Astro.props;
+const { title, description, fullWidth = false, hideFooter = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -36,6 +37,7 @@ const { title, description, fullWidth = false } = Astro.props;
                 </div>
             )
         }
-        <Footer />
+
+        {!hideFooter && <Footer />}
     </body>
 </html>

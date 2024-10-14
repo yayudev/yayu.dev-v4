@@ -25,10 +25,14 @@ const links = [
         active: pathname === "/contact",
     },
 ];
+
+const isLanding = pathname === '/';
+
+const navClass = isLanding? 'bg-transparent' : 'bg-white shadow'
 ---
 
 <header>
-    <nav class="bg-white shadow">
+  <nav class="{{navClass}}">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 justify-between">
                 <div

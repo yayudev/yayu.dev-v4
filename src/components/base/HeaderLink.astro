@@ -9,10 +9,12 @@ const { href, class: className, isMobile = false } = Astro.props;
 
 const { pathname } = Astro.url;
 const isActive = href === pathname || pathname.startsWith(`${href}/`);
+const isLanding = pathname === "/";
 
 const baseClasses = isMobile
     ? "block border-l-4 py-2 pl-3 pr-4 text-base font-medium"
-    : "flex place-content-center items-center min-w-[7.5rem] min-w-[7.5rem] border-b-2 px-5 pt-1 text-md font-medium hover:bg-gray-50";
+    : "flex place-content-center items-center min-w-[7.5rem] min-w-[7.5rem] border-b-2 px-5 pt-1 text-md font-medium";
+const baseHoverClasses = isMobile ? "" : "hover:bg-gray-50";
 const activeClasses = isMobile
     ? "bg-blue-50 border-blue-500 text-blue-500 hover:text-blue-500"
     : "border-blue-500 text-gray-900 hover:text-gray-900";
@@ -22,7 +24,8 @@ const inactiveClasses = isMobile
 
 const classes = [
     baseClasses,
-    isActive ? activeClasses : inactiveClasses,
+    isActive ? (isLanding ? "" : activeClasses) : inactiveClasses,
+    isLanding ? "" : baseHoverClasses,
     className ?? "",
 ];
 ---

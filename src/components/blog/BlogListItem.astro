@@ -23,8 +23,6 @@ const { date, image, title, slug, excerpt, featured = false } = Astro.props;
                     src={image}
                     alt={title}
                     class="absolute inset-0 h-full w-full rounded-xl bg-gray-50 object-cover"
-                    transition:name={`blog-image-${slug}`}
-                    transition:animate="initial"
                 />
                 <div
                     class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10"

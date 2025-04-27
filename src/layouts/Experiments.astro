@@ -12,7 +12,7 @@ const { slug } = Astro.props;
     <!-- DEMO -->
     <div
         transition:name={`experiment-image-${slug}`}
-        transition:animate="slide"
+        transition:animate="initial"
     >
         <slot name="demo" />
     </div>
@@ -61,7 +61,9 @@ const { slug } = Astro.props;
             }
 
             requestIdleCallback(() => {
-                window?._init();
+                if (!window?._init) {
+                    window?._init();
+                }
             });
         });
     </script>

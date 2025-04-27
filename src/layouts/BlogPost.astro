@@ -11,7 +11,7 @@ export interface Props {
 }
 
 const { slug, data, showImage = true } = Astro.props;
-const { title, description, pubDate, updatedDate, heroImage, excerpt } = data;
+const { title, pubDate, heroImage } = data;
 ---
 
 <DefaultLayout fullWidth={true} title={`yayu.dev | ${title}`}>
@@ -19,7 +19,7 @@ const { title, description, pubDate, updatedDate, heroImage, excerpt } = data;
 
     <BlogpostHeader
         title={title}
-        image={showImage && heroImage}
+        image={showImage ? heroImage : undefined}
         slug={slug}
         date={pubDate}
     />

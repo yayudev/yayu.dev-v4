@@ -2,7 +2,7 @@
 import FormattedDate from "../shared/FormattedDate.astro";
 
 export interface Props {
-    image: string;
+    image?: string;
     title: string;
     slug: string;
     date: Date;
@@ -15,7 +15,7 @@ const { image, title, date, slug } = Astro.props;
     {
         image && (
             <img
-                class="h-32 w-full object-cover lg:h-96 rounded-none"
+                class="h-32 w-full object-cover lg:h-52 rounded-none"
                 src={image}
                 alt={title}
                 transition:name={`blog-image-${slug}`}

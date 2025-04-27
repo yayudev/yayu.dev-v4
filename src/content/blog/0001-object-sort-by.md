@@ -3,6 +3,7 @@ title: "[Javascript] Object.groupBy"
 slug: "en-js-object-group-by"
 pubDate: "Sep 19, 2023"
 excerpt: "Get rid of `.reduce` and `for each` with Object.groupBy"
+heroImage: "/public/blogposts/group-by.jpg"
 ---
 
 # What is Object.groupBy? 

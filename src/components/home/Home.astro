@@ -1,0 +1,64 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div class="bg-gray-950">
+    <img
+        width="700px"
+        class="filter absolute bottom-[-50px] left-[-20px] opacity-50 z-0 max-w-sm scale-150 sm:scale-150 sm:bottom-[-100px] sm:max-w-md md:max-w-lg md:bottom-[-140px] xl:max-w-full xl:left-[-100px] 2xl:left-0"
+        src="/public/code-blocks.svg"
+        alt="Code blocks"
+    />
+
+    <main
+        class="w-screen h-[100svh] max-h-screen max-w-screen overflow-hidden absolute top-0 left-0"
+    >
+        <div class="h-full xl:grid xl:grid-cols-12">
+            <div class="col-span-4"></div>
+            <div class="col-span-3"></div>
+            <div
+                class="flex flex-col items-center justify-center mt-[-150px] gap-4 h-full sm:mt-[-150px] xl:col-span-3 xl:mt-[-50px] 3xl:col-span-3"
+            >
+                <img
+                    class="w-32 h-32 rounded-full border-white border-2"
+                    src="/public/avatar.png"
+                    alt="Profile picture"
+                />
+                <div class="flex flex-col items-center justify-center gap-1">
+                    <h1 class="text-3xl font-bold text-gray-900">
+                        Arturo Coronel
+                    </h1>
+                    <p class="text-lg text-gray-500">Lead Frontend Engineer</p>
+                    <div class="flex gap-4 justify-center items-center mt-0">
+                        <a
+                            href="https://twitter.com/datyayu"
+                            class="text-gray-400 hover:text-gray-200 text-lg"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Icon name="prime:twitter" />
+                        </a>
+
+                        <a
+                            href="htrtps://github.com/yayudev"
+                            class="text-gray-400 hover:text-gray-200 text-2xl"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Icon name="prime:github" />
+                        </a>
+
+                        <a
+                            href="https://linkedin.com/in/yayudev"
+                            class="text-gray-400 hover:text-gray-200 text-2xl"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Icon name="prime:linkedin" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

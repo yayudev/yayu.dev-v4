@@ -6,13 +6,20 @@ import Header from "../components/base/Header.astro";
 import Footer from "../components/base/Footer.astro";
 
 export interface Props {
-    title: string;
-    description: string;
+    title?: string;
+    description?: string;
     fullWidth?: boolean;
     hideFooter?: boolean;
 }
 
-const { title, description, fullWidth = false, hideFooter = false } = Astro.props;
+const {
+    title,
+    description,
+    fullWidth = false,
+    hideFooter = false,
+} = Astro.props;
+
+const overflowClass = hideFooter ? "overflow-hidden" : "";
 ---
 
 <!doctype html>
@@ -20,7 +27,7 @@ const { title, description, fullWidth = false, hideFooter = false } = Astro.prop
     <head>
         <BaseHead title={title} description={description} />
     </head>
-    <body class="h-screen flex flex-col items-stretch">
+    <body class={`h-screen flex flex-col items-stretch ${overflowClass}`}>
         <Header />
         {
             fullWidth && (

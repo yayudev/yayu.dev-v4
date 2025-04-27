@@ -21,9 +21,14 @@ const { date, image, title, slug, featured = false } = Astro.props;
             ]}
         >
             <img
+                class:list={[
+                    featured ? "" : "h-[150px]"
+                ]}
                 src={image}
-                alt=""
-                class="pointer-events-none object-cover"
+                alt={title}
+                width="500"
+                height="500"
+                class="pointer-events-none object-cover w-full"
                 transition:name={`experiment-image-${slug}`}
                 transition:animate="initial"
             />
